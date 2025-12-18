@@ -1,0 +1,16 @@
+services:
+  audit-service:
+    image: halfnothing/audit-service:latest
+    container_name: audit-service
+    networks:
+      - main
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.yaml:/service/config.yaml
+      - ./logs:/service/logs
+    restart: always
+
+networks:
+  main:
+    driver: bridge
