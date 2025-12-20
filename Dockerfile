@@ -2,8 +2,7 @@ FROM golang:1.25.4-alpine AS builder
 
 WORKDIR /build
 
-ENV GO111MODULE=on \
-    CGO_ENABLED=0
+ENV GO111MODULE=on
 
 COPY go.mod go.sum ./
 
