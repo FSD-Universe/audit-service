@@ -7,7 +7,7 @@
 
 Http接口请看 [API文档](https://api.half-nothing.cn)
 
-gRPC接口请看 [proto文件](./src/interfaces/grpc/email.proto)
+gRPC接口请看 [proto文件](./src/interfaces/grpc/audit.proto)
 
 ## 如何使用
 
