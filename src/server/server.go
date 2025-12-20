@@ -33,13 +33,7 @@ func StartHttpServer(content *content.ApplicationContent) {
 		http.SetTelemetry(e, c.TelemetryConfig)
 	}
 
-	auditController := controller.NewAuditLogController(
-		lg,
-		service.NewAuditLogService(
-			lg,
-			content.AuditLog(),
-		),
-	)
+	auditController := controller.NewAuditLogController(lg, service.NewAuditLogService(lg, content.AuditLog()))
 
 	apiGroup := e.Group("/api/v1")
 	auditGroup := apiGroup.Group("/audits")
