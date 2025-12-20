@@ -3,6 +3,12 @@
 [![ReleaseCard]][Release]![ReleaseDataCard]![LastCommitCard]  
 ![BuildStateCard]![DockerStateCard]![ProjectLicense]
 
+本项目提供审计日志记录服务
+
+Http接口请看 [API文档](https://api.half-nothing.cn)
+
+gRPC接口请看 [proto文件](./src/interfaces/grpc/email.proto)
+
 ## 如何使用
 
 ### ***(推荐)*** 使用Docker部署
@@ -15,18 +21,20 @@
    v. 如果需要添加命令行参数
    ```yml
    services:
-     fsd:
+     audit-service:
        image: halfnothing/audit-service:latest
        # 省略部分字段
        command:
+         - "-http_timeout 1m"
    ```
    推荐使用环境变量代替命令行参数
    ```yml
    services:
-     fsd:
+     audit-service:
        image: halfnothing/audit-service:latest
        # 省略部分字段
        environment:
+         HTTP_TIMEOUT: "1m"
    ```
 
 2. 使用docker命令部署  
@@ -36,7 +44,7 @@
    ``` 
    如果需要添加命令行参数, 则在命令的最后添加
    ```shell
-   docker run -d ... halfnothing/audit-service:latest -download_prefix https://gh-proxy.com/https://raw.githubusercontent.com/FSD-Universe/audit-service/refs/heads/main
+   docker run -d ... halfnothing/audit-service:latest -http_timeout 1m
    ```
 
 3. 通过Dockerfile构建  
@@ -70,8 +78,8 @@
 ### 普通部署
 
 1. 获取项目可执行文件
-    - 前往[Release]页面下载最新版本
-    - 前往[Action]页面下载最新开发版本
+    - 前往 [Release] 页面下载最新版本
+    - 前往 [Action] 页面下载最新开发版本
     - 手动[编译](#手动构建)本项目
 2. [可选]下载[`config.yaml`](./docker/config.yaml)配置文件放置于可执行文件同级目录中
 3. 运行可执行文件，如果配置文件存在，则使用配置文件，否则创建默认配置文件
