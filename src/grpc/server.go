@@ -5,7 +5,6 @@
 package grpc
 
 import (
-	"audit-service/src/interfaces/content"
 	pb "audit-service/src/interfaces/grpc"
 	"audit-service/src/interfaces/repository"
 	"context"
@@ -23,11 +22,12 @@ type AuditLogServer struct {
 }
 
 func NewAuditLogServer(
-	content *content.ApplicationContent,
+	lg logger.Interface,
+	auditLogRepo repository.AuditLogInterface,
 ) *AuditLogServer {
 	return &AuditLogServer{
-		logger: logger.NewLoggerAdapter(content.Logger(), "grpc-server"),
-		repo:   content.AuditLog(),
+		logger: logger.NewLoggerAdapter(lg, "grpc-server"),
+		repo:   auditLogRepo,
 	}
 }
 

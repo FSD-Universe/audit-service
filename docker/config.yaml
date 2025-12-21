@@ -27,8 +27,6 @@ global:
 server:
   # http服务配置
   http:
-    # 是否启动
-    enable: true
     # 监听地址
     host: 0.0.0.0
     # 监听端口
@@ -73,8 +71,6 @@ server:
         include_subdomains: false
   # grpc服务配置
   grpc:
-    # 是否启动
-    enable: true
     # 监听地址
     host: 0.0.0.0
     # 监听端口

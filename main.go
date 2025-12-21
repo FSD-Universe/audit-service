@@ -81,30 +81,37 @@ func main() {
 		}
 	}
 
-	applicationContent := content.NewApplicationContentBuilder().
+	auditLogRepo := repository.NewAuditLogRepository(lg, db, applicationConfig.DatabaseConfig.QueryTimeoutDuration)
+
+	contentBuilder := content.NewApplicationContentBuilder().
 		SetConfigManager(configManager).
 		SetCleaner(cl).
 		SetLogger(lg).
 		SetJwtClaimFactory(jwt.NewClaimFactory(applicationConfig.JwtConfig)).
-		SetAuditLog(repository.NewAuditLogRepository(lg, db, applicationConfig.DatabaseConfig.QueryTimeoutDuration)).
-		Build()
+		SetAuditLog(auditLogRepo)
 
-	go server.StartHttpServer(applicationContent)
-
-	if applicationConfig.ServerConfig.GrpcServerConfig.Enable {
-		started := make(chan bool)
-		initFunc := func(s *grpc.Server) {
-			grpcServer := grpcImpl.NewAuditLogServer(applicationContent)
-			pb.RegisterAuditLogServer(s, grpcServer)
-		}
-		if applicationConfig.TelemetryConfig.Enable && applicationConfig.TelemetryConfig.GrpcServerTrace {
-			go grpcUtils.StartGrpcServerWithTrace(lg, cl, applicationConfig.ServerConfig.GrpcServerConfig, started, initFunc)
-		} else {
-			go grpcUtils.StartGrpcServer(lg, cl, applicationConfig.ServerConfig.GrpcServerConfig, started, initFunc)
-		}
-		go discovery.StartServiceDiscovery(lg, cl, started, utils.NewVersion(g.AppVersion),
-			"audit-service", applicationConfig.ServerConfig.GrpcServerConfig.Port)
+	started := make(chan bool)
+	initFunc := func(s *grpc.Server) {
+		grpcServer := grpcImpl.NewAuditLogServer(lg, auditLogRepo)
+		pb.RegisterAuditLogServer(s, grpcServer)
 	}
+	if applicationConfig.TelemetryConfig.Enable && applicationConfig.TelemetryConfig.GrpcServerTrace {
+		go grpcUtils.StartGrpcServerWithTrace(lg, cl, applicationConfig.ServerConfig.GrpcServerConfig, started, initFunc)
+	} else {
+		go grpcUtils.StartGrpcServer(lg, cl, applicationConfig.ServerConfig.GrpcServerConfig, started, initFunc)
+	}
+
+	discovery.StartServiceDiscovery(
+		context.Background(),
+		lg,
+		cl,
+		started,
+		utils.NewVersion(g.AppVersion),
+		g.ServiceName,
+		applicationConfig.ServerConfig.GrpcServerConfig.Port,
+	)
+
+	go server.StartHttpServer(contentBuilder.Build())
 
 	cl.Wait()
 }
