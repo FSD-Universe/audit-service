@@ -35,6 +35,8 @@ func StartHttpServer(content *content.ApplicationContent) {
 
 	auditController := controller.NewAuditLogController(lg, service.NewAuditLogService(lg, content.AuditLog()))
 
+	http.SetHealthPoint(e)
+
 	apiGroup := e.Group("/api/v1")
 	auditGroup := apiGroup.Group("/audits")
 	auditGroup.GET("", auditController.GetAuditLogPage, jwtMiddleware, requireNoFresh)
