@@ -10,7 +10,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -ldflags="-w -s" -tags "database http httpjwt grpc permission telemetry" -o /build/audit-service .
+RUN go build -ldflags="-w -s" -tags "database http httpjwt permission telemetry" -o /build/audit-service .
 
 FROM alpine:latest AS runtime
 
