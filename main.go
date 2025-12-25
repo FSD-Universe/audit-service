@@ -26,7 +26,6 @@ import (
 	"half-nothing.cn/service-core/jwt"
 	"half-nothing.cn/service-core/logger"
 	"half-nothing.cn/service-core/telemetry"
-	"half-nothing.cn/service-core/utils"
 )
 
 func main() {
@@ -101,22 +100,18 @@ func main() {
 		go grpcUtils.StartGrpcServer(lg, cl, applicationConfig.ServerConfig.GrpcServerConfig, started, initFunc)
 	}
 
-	service := discovery.StartServiceDiscovery(
-		context.Background(),
-		lg,
-		cl,
-		started,
-		utils.NewVersion(g.AppVersion),
-		g.ServiceName,
-		applicationConfig.ServerConfig.GrpcServerConfig.Port,
-	)
+	consulClient := discovery.NewConsulClient(lg, applicationConfig.GlobalConfig.Discovery, g.AppVersion)
+
+	if err := consulClient.RegisterServer(); err != nil {
+		lg.Fatalf("fail to register server: %v", err)
+		return
+	}
+
+	cl.Add("Discovery", consulClient.UnregisterServer)
 
 	go func() {
 		for {
-			select {
-			case <-service.StatusChannel():
-				continue
-			}
+			<-consulClient.EventChan
 		}
 	}()
 

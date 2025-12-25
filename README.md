@@ -106,18 +106,20 @@ upx -9 audit-service
 
 ## 命令行参数与环境变量一览
 
-| 命令行参数              | 环境变量               | 描述                 | 默认值                                       |
-|:-------------------|:-------------------|:-------------------|:------------------------------------------|
-| no_logs            | NO_LOGS            | 禁用日志输出到文件          | false                                     |
-| auto_migrate       | AUTO_MIGRATE       | 自动迁移数据库(不要在生产环境使用) | false                                     |
-| config             | CONFIG_FILE_PATH   | 配置文件路径             | "config.yaml"                             |
-| broadcast_port     | BROADCAST_PORT     | 服务发现广播端口           | 9999                                      |
-| heartbeat_interval | HEARTBEAT_INTERVAL | 心跳间隔               | "30s"                                     |
-| service_timeout    | SERVICE_TIMEOUT    | 服务超时时间             | "90s"                                     |
-| cleanup_interval   | CLEANUP_INTERVAL   | 清理间隔               | "30s"                                     |
-| eth_name           | ETH_NAME           | 以太网接口名称            | "Ethernet"(windows) / "eth0"(linux/macos) |
-| http_timeout       | HTTP_TIMEOUT       | Http请求超时时间         | "30s"                                     |
-| gzip_level         | GZIP_LEVEL         | Gzip压缩等级           | 5                                         |
+| 命令行参数                 | 环境变量                  | 描述                 | 默认值                                       |
+|:----------------------|:----------------------|:-------------------|:------------------------------------------|
+| no_logs               | NO_LOGS               | 禁用日志输出到文件          | false                                     |
+| auto_migrate          | AUTO_MIGRATE          | 自动迁移数据库(不要在生产环境使用) | false                                     |
+| config                | CONFIG_FILE_PATH      | 配置文件路径             | "config.yaml"                             |
+| health_check_interval | HEALTH_CHECK_INTERVAL | 健康检查间隔             | "30s"                                     |
+| health_check_timeout  | HEALTH_CHECK_TIMEOUT  | 健康检查超时时间           | "5s"                                      |
+| deregister_after      | DEREGISTER_AFTER      | 健康检查失败后注销时间        | "1m"                                      |
+| service_address       | SERVICE_ADDRESS       | 服务对外访问地址，默认为本地网卡地址 | "localhost"                               |
+| center_address        | CENTER_ADDRESS        | consul注册中心地址       | "localhost:8500"                          |
+| reconnect_timeout     | RECONNECT_TIMEOUT     | 重连超时时间             | "30s"                                     |
+| eth_name              | ETH_NAME              | 以太网接口名称            | "Ethernet"(windows) / "eth0"(linux/macos) |
+| http_timeout          | HTTP_TIMEOUT          | Http请求超时时间         | "30s"                                     |
+| gzip_level            | GZIP_LEVEL            | Gzip压缩等级           | 5                                         |
 
 ## 贡献指南
 

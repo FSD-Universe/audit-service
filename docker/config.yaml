@@ -3,7 +3,7 @@ global:
   # 服务名称
   name: audit-service
   # 配置文件版本
-  version: 0.1.0
+  version: 0.2.0
   # 日志配置
   log:
     # 日志级别
@@ -22,6 +22,16 @@ global:
     compress: true
     # 是否使用本地时间而不是UTC时间
     local_time: true
+  # 服务注册配置
+  discovery:
+    # 服务ID
+    id: audit-service-1
+    # 服务名称
+    name: audit-service
+    # 服务HTTP访问地址
+    http_port: 8080
+    # 服务GRPC访问地址
+    grpc_port: 8081
 
 # 服务配置
 server:
