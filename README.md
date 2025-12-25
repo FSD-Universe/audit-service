@@ -94,7 +94,7 @@ cd audit-service
 # 确认安装了go编译器并且版本>=1.25
 go version
 # 运行go build命令
-go build -ldflags="-w -s" -tags "database http httpjwt grpc permission telemetry" .
+go build -ldflags="-w -s" -tags "database http httpjwt permission telemetry" .
 # 对于windows系统, 可执行文件为audit-service.exe
 # 对于linux系统, 可执行文件为audit-service
 # [可选]使用upx压缩可执行文件

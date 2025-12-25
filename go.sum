@@ -409,3 +409,5 @@ half-nothing.cn/service-core v0.6.0 h1:WYwcl78iE2awEEd1a5kISfQK9jnaHafB3XQPaptlH
 half-nothing.cn/service-core v0.6.0/go.mod h1:4pURZ9FWWBLSE1AfQOQ12ksoC6x4j4tSNHCb2hMDkhM=
 half-nothing.cn/service-core v0.6.4 h1:quzY4TcjQ02HObms2D0+297gx3YMHvht9PmBugLFwpg=
 half-nothing.cn/service-core v0.6.4/go.mod h1:eUZgdSCycNQ9LizTckrH5Btr9ev9LvdMJnnUXix3LB8=
+half-nothing.cn/service-core v0.7.0 h1:uj1Hh9AMgcN1u6a6/itoaa4BSgK/3Po6vQL2rTLP9HA=
+half-nothing.cn/service-core v0.7.0/go.mod h1:eUZgdSCycNQ9LizTckrH5Btr9ev9LvdMJnnUXix3LB8=
