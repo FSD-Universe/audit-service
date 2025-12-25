@@ -30,7 +30,7 @@ func StartHttpServer(content *content.ApplicationContent) {
 	jwtMiddleware, requireNoFresh, _ := http.GetJWTMiddleware(content.ClaimFactory())
 
 	if c.TelemetryConfig.HttpServerTrace {
-		http.SetTelemetry(e, c.TelemetryConfig)
+		http.SetTelemetry(e, c.TelemetryConfig, http.SkipperHealthCheck)
 	}
 
 	auditController := controller.NewAuditLogController(lg, service.NewAuditLogService(lg, content.AuditLog()))
